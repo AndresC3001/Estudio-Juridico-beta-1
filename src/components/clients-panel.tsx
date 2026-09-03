@@ -77,11 +77,13 @@ export function ClientsPanel({
     setBusy(true);
     try {
       await save({
-        id: form.id,
-        name: form.name.trim(),
-        email: form.email.trim() || null,
-        phone: form.phone.trim() || null,
-        notes: form.notes.trim() || null,
+        data: {
+          id: form.id,
+          name: form.name.trim(),
+          email: form.email.trim() || null,
+          phone: form.phone.trim() || null,
+          notes: form.notes.trim() || null,
+        },
       });
       toast.success(form.id ? "Cliente actualizado" : "Cliente creado");
       setOpen(false);
@@ -95,7 +97,7 @@ export function ClientsPanel({
 
   async function handleDelete(client: ClientRow) {
     try {
-      await remove({ id: client.id });
+      await remove({ data: { id: client.id } });
       toast.success("Cliente eliminado");
       await queryClient.invalidateQueries({ queryKey: ["dashboard"] });
     } catch (err) {

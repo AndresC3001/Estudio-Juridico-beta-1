@@ -96,11 +96,13 @@ export function DealsPanel({
     setBusy(true);
     try {
       await save({
-        id: form.id,
-        title: form.title.trim(),
-        value: Number(form.value || 0),
-        status: form.status,
-        client_id: form.client_id || null,
+        data: {
+          id: form.id,
+          title: form.title.trim(),
+          value: Number(form.value || 0),
+          status: form.status,
+          client_id: form.client_id || null,
+        },
       });
       toast.success(form.id ? "Trato actualizado" : "Trato creado");
       setOpen(false);
@@ -114,7 +116,7 @@ export function DealsPanel({
 
   async function handleDelete(deal: DealRow) {
     try {
-      await remove({ id: deal.id });
+      await remove({ data: { id: deal.id } });
       toast.success("Trato eliminado");
       await queryClient.invalidateQueries({ queryKey: ["dashboard"] });
     } catch (err) {
@@ -125,11 +127,13 @@ export function DealsPanel({
   async function handleStatusChange(deal: DealRow, status: DealRow["status"]) {
     try {
       await save({
-        id: deal.id,
-        title: deal.title,
-        value: Number(deal.value),
-        status,
-        client_id: deal.client_id,
+        data: {
+          id: deal.id,
+          title: deal.title,
+          value: Number(deal.value),
+          status,
+          client_id: deal.client_id,
+        },
       });
       toast.success("Estado actualizado");
       await queryClient.invalidateQueries({ queryKey: ["dashboard"] });
@@ -182,7 +186,7 @@ export function DealsPanel({
                   value={deal.status}
                   onValueChange={(value) => handleStatusChange(deal, value as DealRow["status"])}
                 >
-                  <SelectTrigger size="sm" className="w-32">
+                  <SelectTrigger className="w-32">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
