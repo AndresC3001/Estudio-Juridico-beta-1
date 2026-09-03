@@ -15,6 +15,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       { title: "Panel — Gestión de clientes y ventas" },
       { name: "description", content: "Resumen de clientes, tratos y métricas de tu negocio." },
     ],
+  }),
   component: DashboardPage,
 });
 
