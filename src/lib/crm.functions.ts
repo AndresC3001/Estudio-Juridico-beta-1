@@ -85,7 +85,7 @@ export const saveClient = createServerFn({ method: "POST" })
       email: data.email || null,
       phone: data.phone || null,
       notes: data.notes || null,
-HOLD    };
+    };
     if (data.id) {
       const { error } = await supabase
         .from("clients")
